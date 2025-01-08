@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موقع جودي</title>
+  <link rel="icon" href="icon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Goya</h1>
+  </header>
+  <input type="text" id="searchBox" placeholder="اكتب نوع الصورة... مثال: أسد">
+  <button onclick="searchImage()">ابحث</button>
+
+  <div id="imageContainer"></div>
+  <h3>صور مقترحة 📸</h3>
+  <div id="recommendedImages"></div>
+  <script>
+        const images = {
+            'أسد': 'images/lion.jpg',
+            'نمر': 'images/tiger.jpg',
+            'فيل': 'images/elephant.jpg',
+            'دب': 'images/bear.jpg'
+        };
+
+        const recommendedImages = ['lion.jpg', 'tiger.jpg', 'elephant.jpg', 'bear.jpg'];
+
+        function searchImage() {
+            const searchBox = document.getElementById('searchBox').value.trim();
+            const imageContainer = document.getElementById('imageContainer');
+            const recommendedContainer = document.getElementById('recommendedImages');
+            
+            imageContainer.innerHTML = '';
+            recommendedContainer.innerHTML = '';
+
+            if (images[searchBox]) {
+                imageContainer.innerHTML = `<img src="${images[searchBox]}" alt="${searchBox}">`;
+            } else {
+                imageContainer.innerHTML = '<p>😞 الصورة غير موجودة.</p>';
+            }
+
+            recommendedImages.forEach(img => {
+                recommendedContainer.innerHTML += `<img src="images/${img}" alt="${img}">`;
+            });
+        }
+  </script>
+</body>
+</html>
