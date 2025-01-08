@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- مكتبات Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
 <body>
     <header>
-        <h1>مرحبًا بك في Goya 🎨</h1>
+        <h1>تسجيل الدخول 🎨</h1>
     </header>
 
     <!-- تسجيل الدخول التقليدي -->
-    <div class="login-container">
-        <h2>تسجيل الدخول</h2>
+    <div>
         <input type="text" id="username" placeholder="اسم المستخدم">
         <input type="password" id="password" placeholder="كلمة المرور">
         <button onclick="login()">تسجيل الدخول</button>
@@ -23,37 +24,49 @@
     <hr>
 
     <!-- تسجيل الدخول بواسطة جوجل -->
-    <div class="google-login">
+    <div>
         <h3>أو تسجيل الدخول باستخدام جوجل</h3>
-        <div id="g_id_onload"
-             data-client_id="957944143381-c8fsa2i7527o4ermeklbafeloe9qdekk.apps.googleusercontent.com"
-             data-callback="handleCredentialResponse"
-             data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin" data-type="standard"></div>
+        <button id="google-sign-in">تسجيل الدخول بجوجل</button>
     </div>
 
     <script>
+        // تهيئة Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDnFpQRkMqsqAg5akf0xhhb2QDnZDx_s1Q",
+            authDomain: "goya-22130.firebaseapp.com",
+            projectId: "goya-22130",
+            storageBucket: "goya-22130.firebasestorage.app",
+            messagingSenderId: "156905704610",
+            appId: "1:156905704610:web:67a2109338a308416f5bfb"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // تسجيل الدخول التقليدي
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
-            if (username === "admin" && password === "1234") {  
+            if (username === "admin" && password === "1234") {
                 alert("✅ تم تسجيل الدخول بنجاح!");
-                localStorage.setItem('isLoggedIn', 'true');
-                window.location.href = 'upload.html'; 
+                window.location.href = "index.html";
             } else {
-                alert("❌ خطأ في اسم المستخدم أو كلمة المرور!");
+                alert("❌ خطأ في بيانات الدخول!");
             }
         }
 
-        // تسجيل الدخول عبر جوجل
-        function handleCredentialResponse(response) {
-            const responsePayload = JSON.parse(atob(response.credential.split(".")[1]));
-            alert(`✅ تم تسجيل الدخول بنجاح كـ: ${responsePayload.name}`);
-            localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = 'upload.html'; 
-        }
+        // تسجيل الدخول بجوجل
+        const googleSignInButton = document.getElementById('google-sign-in');
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        googleSignInButton.addEventListener('click', () => {
+            auth.signInWithPopup(provider).then((result) => {
+                alert(`✅ تم تسجيل الدخول كـ: ${result.user.displayName}`);
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error("خطأ:", error);
+            });
+        });
     </script>
 </body>
 </html>
