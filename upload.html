@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفع الصور</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>رفع صورة جديدة 📸</h1>
+        <button onclick="logout()">تسجيل الخروج</button>
+    </header>
+
+    <div class="upload-container">
+        <input type="file" id="imageInput">
+        <button onclick="uploadImage()">رفع الصورة</button>
+        <div id="uploadedImages"></div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                alert('🚫 يجب تسجيل الدخول أولًا!');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function uploadImage() {
+            const fileInput = document.getElementById('imageInput').files[0];
+            const uploadedImages = document.getElementById('uploadedImages');
+
+            if (fileInput) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = e.target.result;
+                    imgElement.style.width = '200px';
+                    uploadedImages.appendChild(imgElement);
+                    alert('✅ تم رفع الصورة بنجاح!');
+                };
+                reader.readAsDataURL(fileInput);
+            } else {
+                alert('❌ الرجاء اختيار صورة أولًا.');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
