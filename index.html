@@ -3,19 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>موقع جودي</title>
-  <link rel="icon" href="icon.ico">
+  <title>Goya</title>
+  <link rel="icon" href="profile icon.ico">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <h1>Goya</h1>
   </header>
-  <input type="text" id="searchBox" placeholder="اكتب نوع الصورة... مثال: أسد">
-  <button onclick="searchImage()">ابحث</button>
+      <!-- زر تسجيل الدخول -->
+      <button onclick="window.location.href='login.html'">تسجيل الدخول</button>
 
+      <input type="text" id="searchBox" placeholder="اكتب اسم الصورة...">
+      <button onclick="searchImage()">ابحث</button>
+  
+  <div class="logo">
+    <a href="index.html">
+        <img src="icon.ico" alt="Site Logo">
+    </a>
+</div>
   <div id="imageContainer"></div>
-  <h3>صور مقترحة 📸</h3>
+  <h3>Proposed arts📸</h3>
   <div id="recommendedImages"></div>
   <script>
         const images = {
@@ -36,13 +44,13 @@
             recommendedContainer.innerHTML = '';
 
             if (images[searchBox]) {
-                imageContainer.innerHTML = `<img src="${images[searchBox]}" alt="${searchBox}">`;
+                imageContainer.innerHTML = `<img src="${images[searchBox]}" alt="${searchBox}" style="width: 300px; height: auto;">`;
             } else {
                 imageContainer.innerHTML = '<p>😞 الصورة غير موجودة.</p>';
             }
 
             recommendedImages.forEach(img => {
-                recommendedContainer.innerHTML += `<img src="images/${img}" alt="${img}">`;
+                recommendedContainer.innerHTML += `<img src="images/${img}" alt="${img}" style="width: 150px; margin: 5px;">`;
             });
         }
   </script>
